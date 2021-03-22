@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+		<link rel="stylesheet" href="style.css" />
+		<title>Cam's Typing Game!</title>
+	</head>
+	<body>
+		<div class="container">
+			<!-- LEVEL SELECTION -->
+			<button class="levels-btn" id="levels-btn">
+				<i class="fas fa-cog"></i>
+			</button>
+
+			<div class="levels" id="levels">
+				<form class="levels-form">
+					<select id="level">
+						<option value="easy">Easy</option>
+						<option value="medium">Medium</option>
+						<option value="hard">Hard</option>
+					</select>
+				</form>
+			</div>
+
+			<!-- GAME CONTAINER -->
+			<div class="game">
+				<h1>Cameron's Typing Game!</h1>
+
+				<!-- Stats -->
+				<p class="time">Time Left: <span id="time">10 seconds</span></p>
+				<p class="score">Score: <span id="score">0</span></p>
+
+				<hr />
+				<br />
+				<small>Type this word:</small>
+				<h1 id="word">test</h1>
+				<input type="text" id="text-input" autocomplete="off" placeholder="Ready?" />
+			</div>
+
+			<!-- END GAME OVERLAY -->
+			<div id="end-game" class="end-game-overlay">
+				<div class="end-game-card">
+					<h1>TIME'S UP!</h1>
+					<h2>Your score: <span id="final-score"></span></h2>
+					<button onclick="location.reload()">Play again?</button>
+				</div>
+			</div>
+		</div>
+
+		<script src="script.js"></script>
+	</body>
+</html>
