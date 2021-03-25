@@ -1,8 +1,11 @@
 // Words for game
-const words = ["cat", "kitten", "dog", "puppy", "frog", "tadpole", "zoo", "fox", "bird", "quail", "box", "lemon", "grapes", "juice", "mom", "dad", "love", "hugging", "kissing", "hands", "feet", "thinking", "eat", "hungry", "drink", "birthday", "cake", "happy", "toad", "study", "school", "friends", "chicken", "water", "flower", "leaf"]
+// NOTE: Using set to avoid duplicates
+const wordsSet = new Set(["cat", "kitten", "dog", "puppy", "frog", "tadpole", "zoo", "fox", "bird", "quail", "box", "lemon", "grapes", "juice", "mom", "dad", "love", "hugging", "kissing", "hands", "feet", "thinking", "eat", "hungry", "drink", "birthday", "cake", "happy", "toad", "study", "school", "friends", "chicken", "water", "flower", "leaf", "sad", "leprechaun", "chocolate", "candy", "rice", "spoon", "fork"])
 
-// Words for input placeholder
-const encouragingMessages = ["Ready for more?", "Let's go!", "You can do it!", "Keep going!", "Don't give up!", "Stay classy!", "Right on!", "Cool!"]
+const encouragingMessagesSet = new Set(["Ready for more?", "Let's go!", "You can do it!", "Keep going!", "Don't give up!", "Stay classy!", "Right on!", "Cool!"])
+
+const words = Array.from(wordsSet)
+const encouragingMessages = Array.from(encouragingMessagesSet)
 
 // Get DOM elements
 const wordEl = document.getElementById("word")
@@ -22,6 +25,10 @@ textEl.focus()
 let generatedWord
 let score = 0
 let time = 10 // time in seconds
+
+// Persist difficulty selected
+let difficulty = localStorage.getItem("difficulty") !== null ? localStorage.getItem("difficulty") : "easy"
+levelSelect.value = difficulty
 
 // Create timer
 const timer = setInterval(updateTime, 1000)
@@ -67,20 +74,43 @@ function gameOver() {
 // START GAME!
 addWordToGame(wordEl)
 
-// Event listeners
+// LISTEN FOR LITTLE HANDS TYPING
 textEl.addEventListener("input", event => {
 	const typedText = event.target.value
 
 	if (typedText === generatedWord) {
 		// Add another word to the game
 		addWordToGame(wordEl)
+
 		// Clear previous word
 		event.target.value = ""
+
 		// Update placeholder
 		textEl.placeholder = getPlaceholder(encouragingMessages)
+
 		// Update score
 		updateScore()
+
+		// Time boost!
+		if (difficulty === "hard") {
+			time += 1
+		} else if (difficulty === "medium") {
+			time += 2
+		} else {
+			time += 5
+		}
+
+		updateTime()
 	}
+})
+
+// LISTEN FOR CLICK ON GEAR ICON
+levelsButton.addEventListener("click", () => levels.classList.toggle("hide"))
+
+// DIFFICULTY LEVEL
+levelSelect.addEventListener("change", e => {
+	difficulty = e.target.value
+	localStorage.setItem("difficulty", difficulty)
 })
 
 // TODO:
